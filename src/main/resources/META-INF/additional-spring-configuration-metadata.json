@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.datasource.jpa.hibernate.ddl-auto",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.jpa.hibernate.ddl-auto."
+  }
+] }
