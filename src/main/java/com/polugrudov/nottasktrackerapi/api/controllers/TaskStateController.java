@@ -1,6 +1,7 @@
 package com.polugrudov.nottasktrackerapi.api.controllers;
 
 import com.polugrudov.nottasktrackerapi.api.controllers.helpers.ControllerHelper;
+import com.polugrudov.nottasktrackerapi.api.dto.AskDto;
 import com.polugrudov.nottasktrackerapi.api.dto.TaskStateDto;
 import com.polugrudov.nottasktrackerapi.api.exceptions.BadRequestException;
 import com.polugrudov.nottasktrackerapi.api.exceptions.NotFoundException;
@@ -32,7 +33,7 @@ public class TaskStateController {
     ControllerHelper controllerHelper;
 
     private static final String GET_TASK_STATES = "/api/projects/{project_id}/task-states";
-    private static final String CREATE_TASK_STATE = "/api/projects/{project_id}/task-tates";
+    private static final String CREATE_TASK_STATE = "/api/projects/{project_id}/task-states";
     private static final String UPDATE_TASK_STATE = "/api/task-states/{task_state_id}";
     private static final String CHANGE_TASK_STATE_POSITION = "/api/task-states/{task_state_id}/position/change";
     private static final String DELETE_TASK_STATE = "/api/task-states/{task_state_id}";
@@ -168,24 +169,7 @@ public class TaskStateController {
                     .getRightTaskState();
         }
 
-        Optional<TaskStateEntity> optionalOldRightTaskState = changeTaskState.getRightTaskState();
-        Optional<TaskStateEntity> optionalOldLeftTaskState = changeTaskState.getLeftTaskState();
-
-        optionalOldLeftTaskState
-                .ifPresent(it -> {
-
-                    it.setRightTaskState(optionalOldRightTaskState.orElse(null));
-
-                    taskStateRepository.saveAndFlush(it);
-                });
-
-        optionalOldRightTaskState
-                .ifPresent(it -> {
-
-                    it.setLeftTaskState(optionalOldLeftTaskState.orElse(null));
-
-                    taskStateRepository.saveAndFlush(it);
-                });
+        replaceOldTaskStatePosition(changeTaskState);
 
         if (optionalNewLeftTaskState.isPresent()) {
 
@@ -222,6 +206,40 @@ public class TaskStateController {
 
         return taskStateDtoFactory.makeTaskStateDto(changeTaskState);
     }
+
+    @DeleteMapping(DELETE_TASK_STATE)
+    public AskDto deleteTaskState(@PathVariable(name = "task_state_id") Long taskStateId) {
+
+        TaskStateEntity changeTaskState = getTaskStateOrThrowException(taskStateId);
+
+        replaceOldTaskStatePosition(changeTaskState);
+
+        taskStateRepository.delete(changeTaskState);
+
+        return AskDto.builder().answer(true).build();
+    }
+
+    private void replaceOldTaskStatePosition(TaskStateEntity changeTaskState) {
+        Optional<TaskStateEntity> optionalOldLeftTaskState = changeTaskState.getLeftTaskState();
+        Optional<TaskStateEntity> optionalOldRightTaskState = changeTaskState.getRightTaskState();
+
+        optionalOldLeftTaskState
+                .ifPresent(it -> {
+
+                    it.setRightTaskState(optionalOldRightTaskState.orElse(null));
+
+                    taskStateRepository.saveAndFlush(it);
+                });
+
+        optionalOldRightTaskState
+                .ifPresent(it -> {
+
+                    it.setLeftTaskState(optionalOldLeftTaskState.orElse(null));
+
+                    taskStateRepository.saveAndFlush(it);
+                });
+    }
+
 
     private TaskStateEntity getTaskStateOrThrowException(Long taskStateId) {
 
