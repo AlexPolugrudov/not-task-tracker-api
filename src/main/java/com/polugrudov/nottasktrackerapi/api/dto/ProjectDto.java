@@ -2,7 +2,6 @@ package com.polugrudov.nottasktrackerapi.api.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,17 +14,17 @@ import java.time.Instant;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProjectDto {
 
-    @NotNull
+    @NonNull
     Long id;
 
-    @NotNull
+    @NonNull
     String name;
 
-    @NotNull
+    @NonNull
     @JsonProperty("created_at")
     Instant createdAt;
 
-    @Builder.Default
+    @NonNull
     @JsonProperty("updated_at")
-    Instant updatedAt = Instant.now();
+    Instant updatedAt;
 }

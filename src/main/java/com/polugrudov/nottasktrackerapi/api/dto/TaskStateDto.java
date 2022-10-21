@@ -1,11 +1,11 @@
 package com.polugrudov.nottasktrackerapi.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Builder
@@ -14,16 +14,22 @@ import java.time.Instant;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TaskStateDto {
 
-    @NotNull
+    @NonNull
     Long id;
 
-    @NotNull
+    @NonNull
     String name;
 
-    @NotNull
-    String ordinal;
+    @JsonProperty("left_task_state_id")
+    Long leftTaskStateId;
 
-    @NotNull
+    @JsonProperty("right_task_state_id")
+    Long rightTaskStateId;
+
+    @NonNull
     @JsonProperty("created_at")
-    Instant createdAt = Instant.now();
+    Instant createdAt;
+
+    @NonNull
+    List<TaskDto> tasks;
 }

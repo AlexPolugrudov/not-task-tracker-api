@@ -31,8 +31,8 @@ public class ProjectEntity {
     @Builder.Default
     Instant updatedAt = Instant.now();
 
-    @OneToMany
-    @JoinColumn(name = "project_id", referencedColumnName = "id")
     @Builder.Default
+    @OneToMany
+    @JoinColumn(name = "project_id")
     List<TaskStateEntity> taskStates = new ArrayList<>();
 }

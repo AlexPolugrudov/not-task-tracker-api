@@ -1,9 +1,9 @@
 package com.polugrudov.nottasktrackerapi.api.controllers;
 
+import com.polugrudov.nottasktrackerapi.api.controllers.helpers.ControllerHelper;
 import com.polugrudov.nottasktrackerapi.api.dto.AskDto;
 import com.polugrudov.nottasktrackerapi.api.dto.ProjectDto;
 import com.polugrudov.nottasktrackerapi.api.exceptions.BadRequestException;
-import com.polugrudov.nottasktrackerapi.api.exceptions.NotFoundException;
 import com.polugrudov.nottasktrackerapi.api.factories.ProjectDtoFactory;
 import com.polugrudov.nottasktrackerapi.store.entities.ProjectEntity;
 import com.polugrudov.nottasktrackerapi.store.repositories.ProjectRepository;
@@ -29,6 +29,8 @@ public class ProjectController {
 
     ProjectRepository projectRepository;
 
+    ControllerHelper controllerHelper;
+
     private static final String FETCH_PROJECT = "/api/projects";
     private static final String CREATE_OR_UPDATE_PROJECT = "/api/projects";
     private static final String DELETE_PROJECT = "/api/projects/{project_id}";
@@ -41,14 +43,14 @@ public class ProjectController {
 
         Stream<ProjectEntity> projectStream = optionalPrefixName
                 .map(projectRepository::streamAllByNameStartingWithIgnoreCase)
-                .orElseGet(projectRepository::streamAll);
+                .orElseGet(projectRepository::streamAllBy);
 
         return projectStream
                 .map(projectDtoFactory::makeProjectDto)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping(CREATE_OR_UPDATE_PROJECT)
+    @PutMapping(CREATE_OR_UPDATE_PROJECT)
     public ProjectDto createOrUpdateProject(
             @RequestParam(value = "project_id", required = false) Optional<Long> optionalProjectId,
             @RequestParam(value = "project_name", required = false) Optional<String> optionalProjectName) {
@@ -62,7 +64,7 @@ public class ProjectController {
         }
 
         final ProjectEntity project = optionalProjectId
-                .map(this::getProjectOrThrowException)
+                .map(controllerHelper::getProjectOrThrowException)
                 .orElseGet(() -> ProjectEntity.builder().build());
 
 
@@ -87,20 +89,11 @@ public class ProjectController {
     public AskDto deleteProject(
             @PathVariable("project_id") Long project_id) {
 
-        ProjectEntity project = getProjectOrThrowException(project_id);
+        controllerHelper.getProjectOrThrowException(project_id);
 
         projectRepository.deleteById(project_id);
 
         return AskDto.makeDefault(true);
     }
 
-    private ProjectEntity getProjectOrThrowException(Long project_id) {
-        return projectRepository.findById(project_id)
-                .orElseThrow(() ->
-                        new NotFoundException(
-                                String.format("Project with \"%s\" doesn't exist",
-                                        project_id)
-                        )
-                );
-    }
 }
