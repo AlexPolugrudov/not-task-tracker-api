@@ -2,6 +2,7 @@ package com.polugrudov.nottasktrackerapi.api.controllers;
 
 
 import com.polugrudov.nottasktrackerapi.api.controllers.helpers.ControllerHelper;
+import com.polugrudov.nottasktrackerapi.api.dto.AskDto;
 import com.polugrudov.nottasktrackerapi.api.dto.TaskDto;
 import com.polugrudov.nottasktrackerapi.api.exceptions.BadRequestException;
 import com.polugrudov.nottasktrackerapi.api.exceptions.NotFoundException;
@@ -10,7 +11,6 @@ import com.polugrudov.nottasktrackerapi.store.entities.ProjectEntity;
 import com.polugrudov.nottasktrackerapi.store.entities.TaskEntity;
 import com.polugrudov.nottasktrackerapi.store.entities.TaskStateEntity;
 import com.polugrudov.nottasktrackerapi.store.repositories.TaskRepository;
-import com.polugrudov.nottasktrackerapi.store.repositories.TaskStateRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -36,7 +36,9 @@ public class TaskController {
         private static final String GET_TASK = "/api/projects/{project_id}/task-states/{task_state_id}/tasks";
         private static final String CREATE_TASK = "/api/projects/{project_id}/task-states/{task_state_id}/tasks";
 
-        private static final String UPDATE_TASK = "/api/task-states/{task_id}";
+        private static final String UPDATE_TASK = "/api/projects/task-states/tasks/{task_id}";
+
+        private static final String DELETE_TAK = "/api/projects/task-states/tasks/{task_id}";
 
         @GetMapping(GET_TASK)
         public List<TaskDto> getTaskStates(@PathVariable(name = "project_id") Long projectId,
@@ -96,7 +98,7 @@ public class TaskController {
         @PatchMapping(UPDATE_TASK)
         public TaskDto updateTask(@PathVariable(name = "task_id") Long taskId,
                                   @RequestParam(name = "task_name") String taskName,
-                                  @RequestParam(name = "description") Optional<String> description) {
+                                  @RequestParam(name = "description", required = false) Optional<String> description) {
 
                 if (taskName.isEmpty())
                         throw new BadRequestException("Task name can't be empty");
@@ -123,6 +125,18 @@ public class TaskController {
                 task = taskRepository.saveAndFlush(task);
 
                 return taskDtoFactory.makeTaskDto(task);
+        }
+
+        @DeleteMapping(DELETE_TAK)
+        public AskDto deleteTask(@PathVariable(name = "task_id") Long taskId) {
+
+                TaskEntity changeTask = getTaskOrThrowException(taskId);
+
+                taskRepository.delete(changeTask);
+
+                return AskDto.builder()
+                        .answer(true)
+                        .build();
         }
 
         private TaskEntity getTaskOrThrowException(Long taskId) {
