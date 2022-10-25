@@ -1,11 +1,10 @@
-package com.polugrudov.nottasktrackerapi.store.entities;
+package com.polugrudov.nottasktrackerapi.store.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.List;
 
 @Entity
 @Getter

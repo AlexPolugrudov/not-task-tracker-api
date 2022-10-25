@@ -1,7 +1,7 @@
-package com.polugrudov.nottasktrackerapi.api.factories;
+package com.polugrudov.nottasktrackerapi.api.factory;
 
 import com.polugrudov.nottasktrackerapi.api.dto.TaskDto;
-import com.polugrudov.nottasktrackerapi.store.entities.TaskEntity;
+import com.polugrudov.nottasktrackerapi.store.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 
 @Component

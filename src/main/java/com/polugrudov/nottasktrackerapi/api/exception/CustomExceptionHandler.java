@@ -1,4 +1,4 @@
-package com.polugrudov.nottasktrackerapi.api.exceptions;
+package com.polugrudov.nottasktrackerapi.api.exception;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;

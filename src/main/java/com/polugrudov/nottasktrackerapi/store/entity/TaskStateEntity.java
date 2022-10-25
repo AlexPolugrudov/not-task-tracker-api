@@ -1,4 +1,4 @@
-package com.polugrudov.nottasktrackerapi.store.entities;
+package com.polugrudov.nottasktrackerapi.store.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

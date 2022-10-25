@@ -1,6 +1,6 @@
-package com.polugrudov.nottasktrackerapi.store.repositories;
+package com.polugrudov.nottasktrackerapi.store.repository;
 
-import com.polugrudov.nottasktrackerapi.store.entities.ProjectEntity;
+import com.polugrudov.nottasktrackerapi.store.entity.ProjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

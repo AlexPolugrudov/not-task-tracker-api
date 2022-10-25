@@ -1,4 +1,4 @@
-package com.polugrudov.nottasktrackerapi.api.exceptions;
+package com.polugrudov.nottasktrackerapi.api.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

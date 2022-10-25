@@ -1,4 +1,4 @@
-package com.polugrudov.nottasktrackerapi.api.exceptions;
+package com.polugrudov.nottasktrackerapi.api.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

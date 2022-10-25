@@ -1,12 +1,12 @@
-package com.polugrudov.nottasktrackerapi.api.controllers;
+package com.polugrudov.nottasktrackerapi.api.controller;
 
-import com.polugrudov.nottasktrackerapi.api.controllers.helpers.ControllerHelper;
+import com.polugrudov.nottasktrackerapi.api.controller.helper.ControllerHelper;
 import com.polugrudov.nottasktrackerapi.api.dto.AskDto;
 import com.polugrudov.nottasktrackerapi.api.dto.ProjectDto;
-import com.polugrudov.nottasktrackerapi.api.exceptions.BadRequestException;
-import com.polugrudov.nottasktrackerapi.api.factories.ProjectDtoFactory;
-import com.polugrudov.nottasktrackerapi.store.entities.ProjectEntity;
-import com.polugrudov.nottasktrackerapi.store.repositories.ProjectRepository;
+import com.polugrudov.nottasktrackerapi.api.exception.BadRequestException;
+import com.polugrudov.nottasktrackerapi.api.factory.ProjectDtoFactory;
+import com.polugrudov.nottasktrackerapi.store.entity.ProjectEntity;
+import com.polugrudov.nottasktrackerapi.store.repository.ProjectRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

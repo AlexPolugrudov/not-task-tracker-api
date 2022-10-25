@@ -1,11 +1,11 @@
-package com.polugrudov.nottasktrackerapi.api.controllers.helpers;
+package com.polugrudov.nottasktrackerapi.api.controller.helper;
 
 
-import com.polugrudov.nottasktrackerapi.api.exceptions.NotFoundException;
-import com.polugrudov.nottasktrackerapi.store.entities.ProjectEntity;
-import com.polugrudov.nottasktrackerapi.store.entities.TaskStateEntity;
-import com.polugrudov.nottasktrackerapi.store.repositories.ProjectRepository;
-import com.polugrudov.nottasktrackerapi.store.repositories.TaskStateRepository;
+import com.polugrudov.nottasktrackerapi.api.exception.NotFoundException;
+import com.polugrudov.nottasktrackerapi.store.entity.ProjectEntity;
+import com.polugrudov.nottasktrackerapi.store.entity.TaskStateEntity;
+import com.polugrudov.nottasktrackerapi.store.repository.ProjectRepository;
+import com.polugrudov.nottasktrackerapi.store.repository.TaskStateRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

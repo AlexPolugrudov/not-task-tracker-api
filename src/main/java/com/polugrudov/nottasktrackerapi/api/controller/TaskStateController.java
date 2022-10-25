@@ -1,14 +1,14 @@
-package com.polugrudov.nottasktrackerapi.api.controllers;
+package com.polugrudov.nottasktrackerapi.api.controller;
 
-import com.polugrudov.nottasktrackerapi.api.controllers.helpers.ControllerHelper;
+import com.polugrudov.nottasktrackerapi.api.controller.helper.ControllerHelper;
 import com.polugrudov.nottasktrackerapi.api.dto.AskDto;
 import com.polugrudov.nottasktrackerapi.api.dto.TaskStateDto;
-import com.polugrudov.nottasktrackerapi.api.exceptions.BadRequestException;
-import com.polugrudov.nottasktrackerapi.api.exceptions.NotFoundException;
-import com.polugrudov.nottasktrackerapi.api.factories.TaskStateDtoFactory;
-import com.polugrudov.nottasktrackerapi.store.entities.ProjectEntity;
-import com.polugrudov.nottasktrackerapi.store.entities.TaskStateEntity;
-import com.polugrudov.nottasktrackerapi.store.repositories.TaskStateRepository;
+import com.polugrudov.nottasktrackerapi.api.exception.BadRequestException;
+import com.polugrudov.nottasktrackerapi.api.exception.NotFoundException;
+import com.polugrudov.nottasktrackerapi.api.factory.TaskStateDtoFactory;
+import com.polugrudov.nottasktrackerapi.store.entity.ProjectEntity;
+import com.polugrudov.nottasktrackerapi.store.entity.TaskStateEntity;
+import com.polugrudov.nottasktrackerapi.store.repository.TaskStateRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
